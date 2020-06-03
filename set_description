@@ -1,0 +1,15 @@
+#!/usr/bin/python3
+import pywikibot
+from pywikibot import pagegenerators as pg
+
+with open('topstukken-query.rq', 'r') as query_file:
+    QUERY = query_file.read()
+
+wikidata_site = pywikibot.Site("wikidata", "wikidata")
+generator = pg.WikidataSPARQLPageGenerator(QUERY, site=wikidata_site)
+for page in generator:
+    new_descr = {"fr": "trésor de la collection de la Bibliothèque royale"}
+
+for key in new_descr:
+    item.editDescriptions({key: new_descr[key]},
+        summary="Setting description: {} = '{}'".format(key, new_descr[key]))
